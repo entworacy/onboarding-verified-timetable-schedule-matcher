@@ -1,3 +1,7 @@
+
+
+use std::error::Error;
+use std::fmt::{Display, Formatter};
 use serde::{Serialize, Deserialize};
 
 
@@ -95,4 +99,33 @@ pub struct ExpectedLanguageInfo {
     pub expected_target: String,
     pub expected_language: Option<String>,
     pub accuracy: f64
+}
+
+// Error
+
+#[derive(Debug)]
+pub struct HttpError {
+    pub message: String,
+    pub http_status_code: i32
+}
+
+impl HttpError {
+    pub fn new(
+        message: &str,
+        http_status_code: u16
+    ) -> HttpError {
+        HttpError { message: message.to_string(), http_status_code: http_status_code.clone() as i32 }
+    }
+}
+
+impl Display for HttpError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "[STATUS: {}] {}", self.http_status_code, self.message)
+    }
+}
+
+impl Error for HttpError {
+    fn description(&self) -> &str {
+        &self.message
+    }
 }
