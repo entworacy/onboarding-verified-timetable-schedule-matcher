@@ -51,9 +51,11 @@ pub mod schedule {
             resp
         }
 
-        pub async fn get_timetable(&self, entertainment_type: EntertainmentType) -> Result<Vec<CommonSchedule>, HttpError> {
+        pub async fn get_timetable(&self, entertainment_type: EntertainmentType, mcn_code: &str) -> Result<Vec<CommonSchedule>, HttpError> {
             let mut schedule_info_list: Vec<CommonSchedule> = vec![];
             let mut schedule_info: CommonSchedule = CommonSchedule {
+                mcn_name: "".to_string(),
+                mcn_code: mcn_code.to_string(),
                 platform_type: 2,
                 contents_title: "".to_string(),
                 contents_author_name: "".to_string(),
@@ -76,6 +78,7 @@ pub mod schedule {
                             for date_group in date_groups.dateGroupList {
                                 for video in date_group.videoList {
                                     schedule_info.platform_type = 0;
+                                    schedule_info.mcn_name = "HoloLive Production".to_string();
                                     schedule_info.has_collaborator = !video.collaboTalents.is_empty();
                                     schedule_info.collaborators = vec![];
                                     for collaborator_talent in video.collaboTalents {

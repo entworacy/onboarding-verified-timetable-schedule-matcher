@@ -75,6 +75,8 @@ pub enum PlatformType {
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct CommonSchedule {
+    pub mcn_code: String,
+    pub mcn_name: String,
     pub platform_type: u32,
     pub contents_title: String,
     pub contents_author_name: String,
@@ -95,6 +97,8 @@ pub struct CommonCollaborator {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+
+#[serde(rename_all = "camelCase")]
 pub struct ExpectedLanguageInfo {
     pub expected_target: String,
     pub expected_language: Option<String>,
